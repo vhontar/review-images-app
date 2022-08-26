@@ -13,8 +13,14 @@ android {
         applicationId "com.vhontar.reviewimagesapp"
         minSdk 23
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+
+        def majorVersion = 1
+        def minorVersion = 0
+        def patchVersion = 0
+
+        // you might be wanted to put larger constants for a production app
+        versionCode majorVersion * 100000 + minorVersion * 10000 + patchVersion * 1000
+        versionName "$majorVersion.$minorVersion.$patchVersion"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,7 +55,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
 
     // jetpack compose
@@ -77,6 +83,11 @@ dependencies {
 
     // paging 3
     implementation "androidx.paging:paging-compose:1.0.0-alpha16"
+
+    // room
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     // network
     implementation "com.squareup.retrofit2:retrofit:2.9.0"

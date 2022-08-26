@@ -1,0 +1,3 @@
+package com.vhontar.reviewimagesapp.datasource.network.response
+
+interface DefaultNetworkResponse
