@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlinx-serialization'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -17,10 +19,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+
+            // params from local.properties
+            buildConfigField "String", "PIXABAY_URL", "\"${properties.getProperty('pixabay.url')}\""
+            buildConfigField "String", "PIXABAY_KEY", "\"${properties.getProperty('pixabay.key')}\""
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // params from local.properties
+            buildConfigField "String", "PIXABAY_URL", "\"${properties.getProperty('pixabay.url')}\""
+            buildConfigField "String", "PIXABAY_KEY", "\"${properties.getProperty('pixabay.key')}\""
         }
     }
     compileOptions {
@@ -33,11 +49,34 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // jetpack compose
+    implementation 'androidx.compose.ui:ui:1.2.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.2.1'
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation 'androidx.compose.foundation:foundation:1.2.1'
+    // Material Design
+    implementation 'androidx.compose.material:material:1.2.1'
+    // Material design icons
+    implementation 'androidx.compose.material:material-icons-core:1.2.1'
+    implementation 'androidx.compose.material:material-icons-extended:1.2.1'
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.5.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    // Integration with observables
+    implementation 'androidx.compose.runtime:runtime-livedata:1.2.1'
+
+    // viewmodel and livedata
+    def lifecycle_version = '2.5.1'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // paging 3
+    implementation "androidx.paging:paging-compose:1.0.0-alpha16"
 
     // network
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -46,6 +85,10 @@ dependencies {
     // deserializer/serializer
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
+
+    // Hilt dependencies
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

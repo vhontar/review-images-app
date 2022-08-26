@@ -6,22 +6,17 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NetworkService {
-    @GET("/api/")
-    fun fetchImages(
-        @Query("key") key: String,
+    @GET("")
+    suspend fun fetchImages(
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-        @Query("order") order: Int,
-        @Query("lang") lang: String,
         @Query("image_type") imageType: String = "photo"
     ): Response<HitsResponse>
 
-    @GET("/api/")
-    fun fetchImage(
-        @Query("key") key: String,
-        @Query("id") query: String,
-        @Query("lang") lang: String,
+    @GET("")
+    suspend fun fetchImage(
+        @Query("id") id: String,
         @Query("image_type") imageType: String = "photo"
     ): Response<HitsResponse>
 }

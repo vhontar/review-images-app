@@ -1,11 +1,10 @@
 package com.vhontar.reviewimagesapp.data.network.entities
 
-import com.vhontar.reviewimagesapp.domain.models.HitModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HitEntity(
+data class HitNetworkEntity(
     @SerialName("id")
     val id: Int?,
     @SerialName("user_id")

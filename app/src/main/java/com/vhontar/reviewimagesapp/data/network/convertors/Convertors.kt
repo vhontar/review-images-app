@@ -1,9 +1,9 @@
-package com.vhontar.reviewimagesapp.data.convertors
+package com.vhontar.reviewimagesapp.data.network.convertors
 
-import com.vhontar.reviewimagesapp.data.network.entities.HitEntity
+import com.vhontar.reviewimagesapp.data.network.entities.HitNetworkEntity
 import com.vhontar.reviewimagesapp.domain.models.HitModel
 
-fun HitEntity.toModel(): HitModel = HitModel(
+fun HitNetworkEntity.toModel(): HitModel = HitModel(
     id = id ?: 0,
     userId = userId ?: 0,
     user = user ?: "",
@@ -22,5 +22,4 @@ fun HitEntity.toModel(): HitModel = HitModel(
     previewWidth = previewWidth ?: 0,
     previewHeight = previewHeight ?: 0
 )
-
-fun List<HitEntity>.toModels(): List<HitModel> = map { it.toModel() }
+ fun List<HitNetworkEntity>?.toModels(): List<HitModel> = this?.map { it.toModel() } ?: listOf()
