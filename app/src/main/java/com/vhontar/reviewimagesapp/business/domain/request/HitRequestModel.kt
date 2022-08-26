@@ -1,5 +1,5 @@
 package com.vhontar.reviewimagesapp.business.domain.request
 
 data class HitRequestModel(
-    val id: String
+    val id: Int
 )

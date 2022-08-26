@@ -5,9 +5,11 @@ import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoService
 import javax.inject.Inject
 
 class HitsCacheDataSourceImpl @Inject constructor(
-    private val hitsDaoService: HitsDaoService
+    private val service: HitsDaoService
 ): HitsCacheDataSource {
-    override fun fetchAll(): List<HitModel> = hitsDaoService.fetchAll()
-    override fun insertAll(list: List<HitModel>) = hitsDaoService.insertAll(list)
-    override fun deleteAll() = hitsDaoService.deleteAll()
+    override fun fetch(id: Int): HitModel? = service.fetch(id)
+    override fun fetchAll(): List<HitModel> = service.fetchAll()
+    override fun insert(model: HitModel) = service.insert(model)
+    override fun insertAll(list: List<HitModel>) = service.insertAll(list)
+    override fun deleteAll() = service.deleteAll()
 }
