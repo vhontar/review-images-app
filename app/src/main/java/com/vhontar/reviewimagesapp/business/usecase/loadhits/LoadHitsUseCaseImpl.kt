@@ -8,7 +8,7 @@ import com.vhontar.reviewimagesapp.business.data.network.HitsNetworkDataSource
 import com.vhontar.reviewimagesapp.business.domain.models.HitModel
 import com.vhontar.reviewimagesapp.business.domain.request.HitsRequestModel
 import com.vhontar.reviewimagesapp.utils.AppConstants
-import com.vhontar.reviewimagesapp.view.hits.paging.HitsPagingSource
+import com.vhontar.reviewimagesapp.view.home.paging.HitsPagingSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

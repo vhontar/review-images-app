@@ -18,4 +18,14 @@ data class HitModel(
     val previewURL: String,
     val previewWidth: Int,
     val previewHeight: Int
-)
+) {
+    private var tagsAsList = arrayListOf<String>()
+
+    fun transformTagsToList(): List<String> {
+        if (tagsAsList.isEmpty() && tags.isNotEmpty()) {
+            tagsAsList = tags.split(", ") as ArrayList<String>
+        }
+
+        return tagsAsList
+    }
+}

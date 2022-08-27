@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="vm"
+                type="com.vhontar.reviewimagesapp.view.home.HomeViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05"
+        />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95"
+        />
+
+        <androidx.appcompat.widget.SearchView
+                android:id="@+id/tvSearchView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+        />
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/primary"
+                app:layout_constraintTop_toBottomOf="@id/tvSearchView"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHits"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/default_padding"
+                app:layout_constraintTop_toBottomOf="@id/tvSearchView"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+        />
+
+        <include
+                layout="@layout/include_loader"
+                app:isLoading="@{vm.loading}"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

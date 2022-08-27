@@ -11,16 +11,16 @@ class LoadHitUseCaseImpl @Inject constructor(
     private val networkDataSource: HitsNetworkDataSource,
     private val cacheDataSource: HitsCacheDataSource
 ): LoadHitUseCase {
-    override suspend fun invoke(requestModel: HitRequestModel?): DataState<HitModel?> {
+    override suspend fun invoke(data: HitRequestModel?): DataState<HitModel?> {
         // fail-fast, request model is required to fetch data
-        if (requestModel == null)
+        if (data == null)
             throw IllegalArgumentException("Hit request model is null.")
 
-        val cachedHitModel = cacheDataSource.fetch(requestModel.id)
+        val cachedHitModel = cacheDataSource.fetch(data.id)
         return if (cachedHitModel != null) {
             DataState.data(data = cachedHitModel)
         } else {
-            networkDataSource.fetchHit(requestModel)
+            networkDataSource.fetchHit(data)
         }
     }
 }

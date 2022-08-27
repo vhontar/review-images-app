@@ -1,4 +1,4 @@
-package com.vhontar.reviewimagesapp.view.hits.paging
+package com.vhontar.reviewimagesapp.view.home.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -20,24 +20,25 @@ class HitsPagingSource(
             val result = networkDataSource.fetchHits(
                 hitsRequestModel = hitsRequestModel,
                 page = key,
-                perPage = params.loadSize
+                perPage = AppConstants.DEFAULT_IMAGES_PER_PAGE
+                // params.loadSize (don't want to load 3 * loadSize = 60 elements at the beginning)
             )
 
             if (result.errorState != null) {
                 LoadResult.Error(result.errorState.exception ?: IllegalArgumentException())
             } else {
-                val list = result.data ?: listOf()
+                val hits = result.data ?: listOf()
 
-                // cache only the first page result
-                if (key == 1 && list.isNotEmpty()) {
-                    cacheDataSource.deleteAll()
-                    cacheDataSource.insertAll(list)
-                }
+                // cache only the first page result MAIN thread
+//                if (key == 1 && hits.isNotEmpty()) {
+//                    cacheDataSource.deleteAll()
+//                    cacheDataSource.insertAll(hits)
+//                }
 
                 LoadResult.Page(
-                    data = result.data ?: listOf(),
-                    nextKey = key + 1,
-                    prevKey = key - 1
+                    data = hits,
+                    nextKey = if (hits.isEmpty()) null else key + AppConstants.DEFAULT_PAGE_INDEX,
+                    prevKey = if (key == 1) null else key - AppConstants.DEFAULT_PAGE_INDEX
                 )
             }
 

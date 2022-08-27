@@ -16,8 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DatabaseModule {
-
+object DatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
@@ -29,8 +28,4 @@ abstract class DatabaseModule {
     @Singleton
     @Provides
     fun provideHitDao(appDatabase: AppDatabase): HitDao = appDatabase.hitDao()
-
-    @Singleton
-    @Provides
-    fun provideHitDaoService(dao: HitDao): HitsDaoService = HitsDaoServiceImpl(dao)
 }

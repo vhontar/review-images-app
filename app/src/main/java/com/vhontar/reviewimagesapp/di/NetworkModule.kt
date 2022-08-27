@@ -11,6 +11,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -20,21 +21,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NetworkModule {
-    @Singleton
-    @Provides
-    fun provideHitNetworkService(networkService: NetworkService): HitsNetworkService =
-        HitsNetworkServiceImpl(networkService)
-
+object NetworkModule {
     @OptIn(ExperimentalSerializationApi::class)
     @Singleton
     @Provides
     fun providesNetworkService(okHttpClient: OkHttpClient): NetworkService {
         val contentType = "application/json".toMediaType()
+        val json = Json { ignoreUnknownKeys = true }
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.PIXABAY_URL)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(json.asConverterFactory(contentType))
             .client(okHttpClient)
             .build()
             .create(NetworkService::class.java)

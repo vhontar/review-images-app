@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable name="model" type="com.vhontar.reviewimagesapp.business.domain.models.HitModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/default_padding">
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05"
+        />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95"
+        />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivHit"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:imageUrl="@{model.previewURL}"
+                app:circled="@{false}"
+                app:layout_constraintTop_toTopOf="parent"
+        />
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivUser"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/default_padding"
+                app:imageUrl="@{model.userImageURL}"
+                app:circled="@{true}"
+                app:layout_constraintTop_toBottomOf="@id/ivHit"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+        />
+
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:text="@{model.user}"
+                android:layout_marginStart="@dimen/small_padding"
+                app:layout_constraintTop_toTopOf="@id/ivUser"
+                app:layout_constraintBottom_toBottomOf="@id/ivUser"
+                app:layout_constraintStart_toEndOf="@id/ivUser"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintHorizontal_bias="0"
+        />
+
+        <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"
+                android:layout_marginTop="@dimen/small_padding"
+                android:visibility="@{model.transformTagsToList().empty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/ivUser"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                android:visibility="@{model.transformTagsToList().empty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+        />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -9,38 +9,34 @@ import com.vhontar.reviewimagesapp.business.usecase.loadhit.LoadHitUseCaseImpl
 import com.vhontar.reviewimagesapp.business.usecase.loadhits.LoadHitsUseCase
 import com.vhontar.reviewimagesapp.business.usecase.loadhits.LoadHitsUseCaseImpl
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoService
+import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoServiceImpl
 import com.vhontar.reviewimagesapp.datasource.network.HitsNetworkService
+import com.vhontar.reviewimagesapp.datasource.network.HitsNetworkServiceImpl
+import com.vhontar.reviewimagesapp.datasource.network.NetworkService
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class BusinessModule {
+abstract class CommonModule {
+    @Binds
+    abstract fun bindHitsCacheDataSource(hitsCacheDataSource: HitsCacheDataSourceImpl): HitsCacheDataSource
 
-    @Singleton
-    @Provides
-    fun provideHitsCacheDataSource(hitsDaoService: HitsDaoService): HitsCacheDataSource =
-        HitsCacheDataSourceImpl(hitsDaoService)
+    @Binds
+    abstract fun bindHitsNetworkDataSource(hitsNetworkDataSource: HitsNetworkDataSourceImpl): HitsNetworkDataSource
 
-    @Singleton
-    @Provides
-    fun provideHitsNetworkDataSource(hitsNetworkService: HitsNetworkService): HitsNetworkDataSource =
-        HitsNetworkDataSourceImpl(hitsNetworkService)
+    @Binds
+    abstract fun bindLoadHitUseCase(loadHitsUseCase: LoadHitUseCaseImpl): LoadHitUseCase
 
-    @Singleton
-    @Provides
-    fun provideLoadHitUseCase(
-        networkDataSource: HitsNetworkDataSource,
-        cacheDataSource: HitsCacheDataSource
-    ): LoadHitUseCase = LoadHitUseCaseImpl(networkDataSource, cacheDataSource)
+    @Binds
+    abstract fun bindLoadHitsUseCase(loadHitsUseCase: LoadHitsUseCaseImpl): LoadHitsUseCase
 
-    @Singleton
-    @Provides
-    fun provideLoadHitsUseCase(
-        networkDataSource: HitsNetworkDataSource,
-        cacheDataSource: HitsCacheDataSource
-    ): LoadHitsUseCase = LoadHitsUseCaseImpl(networkDataSource, cacheDataSource)
+    @Binds
+    abstract fun bindHitDaoService(hiltDaoService: HitsDaoServiceImpl): HitsDaoService
+
+    @Binds
+    abstract fun bindHitNetworkService(hitsNetworkService: HitsNetworkServiceImpl): HitsNetworkService
+
 }

@@ -10,9 +10,9 @@ import javax.inject.Inject
 class HitsDaoServiceImpl @Inject constructor(
     private val dao: HitDao
 ): HitsDaoService {
-    override fun fetch(id: Int): HitModel? = dao.fetch(id)?.toDomainModel()
-    override fun fetchAll(): List<HitModel> = dao.fetchAll().toDomainModels()
-    override fun insert(model: HitModel) = dao.insert(model.toDatabaseEntity())
-    override fun insertAll(list: List<HitModel>) = dao.insertAll(list.toDatabaseEntities())
-    override fun deleteAll() = dao.deleteAll()
+    override suspend fun fetch(id: Int): HitModel? = dao.fetch(id)?.toDomainModel()
+    override suspend fun fetchAll(): List<HitModel> = dao.fetchAll().toDomainModels()
+    override suspend fun insert(model: HitModel) = dao.insert(model.toDatabaseEntity())
+    override suspend fun insertAll(list: List<HitModel>) = dao.insertAll(list.toDatabaseEntities())
+    override suspend fun deleteAll() = dao.deleteAll()
 }

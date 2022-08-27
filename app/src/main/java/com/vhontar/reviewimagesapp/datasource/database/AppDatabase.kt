@@ -9,7 +9,8 @@ import com.vhontar.reviewimagesapp.datasource.database.entities.HitDatabaseEntit
     entities = [
         HitDatabaseEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun hitDao(): HitDao

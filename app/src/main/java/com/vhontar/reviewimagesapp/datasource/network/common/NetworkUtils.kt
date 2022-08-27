@@ -20,7 +20,7 @@ internal suspend inline fun <T> makeSafeCall(crossinline block: suspend Coroutin
         } catch (e: IOException) {
             NetworkHandledResult.ResponseError(exception = e)
         } catch (e: Throwable) {
-            NetworkHandledResult.ResponseError(exception = e)
+            NetworkHandledResult.ResponseError()
         }
     }
 }

@@ -9,17 +9,17 @@ import com.vhontar.reviewimagesapp.datasource.database.entities.HitDatabaseEntit
 @Dao
 interface HitDao {
     @Query("select * from hits where id = :id")
-    fun fetch(id: Int): HitDatabaseEntity?
+    suspend fun fetch(id: Int): HitDatabaseEntity?
 
     @Query("select * from hits")
-    fun fetchAll(): List<HitDatabaseEntity>
+    suspend fun fetchAll(): List<HitDatabaseEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(hit: HitDatabaseEntity)
+    suspend fun insert(hit: HitDatabaseEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(hits: List<HitDatabaseEntity>)
+    suspend fun insertAll(hits: List<HitDatabaseEntity>)
 
     @Query("delete from hits")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

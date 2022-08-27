@@ -29,7 +29,7 @@ data class HitNetworkEntity(
     val imageHeight: Int?,
     @SerialName("imageSize")
     val imageSize: Int?,
-    @SerialName("imageURL")
+    @SerialName("largeImageURL")
     val imageURL: String?,
     @SerialName("imageWidth")
     val imageWidth: Int?,
@@ -38,5 +38,5 @@ data class HitNetworkEntity(
     @SerialName("previewURL")
     val previewURL: String?,
     @SerialName("previewWidth")
-    val previewWidth: Int?,
+    val previewWidth: Int?
 )

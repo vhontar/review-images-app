@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NetworkService {
-    @GET("")
+    @GET("/api/")
     suspend fun fetchHits(
         @Query("q") query: String,
         @Query("page") page: Int,
@@ -15,9 +15,9 @@ interface NetworkService {
         @Query("image_type") imageType: String = "photo"
     ): Response<HitsResponse>
 
-    @GET("")
+    @GET("/api/")
     suspend fun fetchHit(
-        @Query("id") id: String,
+        @Query("id") id: Int,
         @Query("image_type") imageType: String = "photo"
     ): Response<HitResponse>
 }
