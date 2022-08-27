@@ -8,5 +8,6 @@
     <color name="onPrimary">#F9F5EB</color>
 
     <color name="background_view_transparent_gray">#20000000</color>
+    <color name="background_view">#60000000</color>
     <color name="light_gray">#e6e6e6</color>
 </resources>

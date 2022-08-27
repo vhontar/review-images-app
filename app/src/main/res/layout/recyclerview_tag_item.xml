@@ -13,7 +13,8 @@
         <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textSize="13sp"
                 android:text="@{tag}"
                 android:textColor="@android:color/white"
                 tools:text="Super long tag name"

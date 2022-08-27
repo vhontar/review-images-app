@@ -17,8 +17,11 @@ class HomeViewModel @Inject constructor(
     private val _loading = MutableLiveData<Boolean>()
     val loading = _loading.asLiveData()
 
-    private var hitsRequestModel = HitsRequestModel("fruits")
-    val hits = loadHitsUseCase.invoke(hitsRequestModel).cachedIn(viewModelScope)
+    var hitsRequestModel = HitsRequestModel("fruits")
+        private set
+    val hits = loadHitsUseCase.invoke {
+        hitsRequestModel
+    }.cachedIn(viewModelScope)
 
     fun generateHitsRequestModel(query: String) {
         hitsRequestModel = HitsRequestModel(query)

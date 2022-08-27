@@ -20,18 +20,19 @@ class LoadHitsUseCaseImpl @Inject constructor(
     private val networkDataSource: HitsNetworkDataSource,
     private val cacheDataSource: HitsCacheDataSource
 ): LoadHitsUseCase {
-    override fun invoke(data: HitsRequestModel?): Flow<PagingData<HitModel>> {
+    override fun invoke(loadRequestModel: (() -> HitsRequestModel)?): Flow<PagingData<HitModel>> {
         // fail-fast, request model is required to fetch data
-        if (data == null)
+        if (loadRequestModel == null)
             throw IllegalArgumentException("Hits request model is null.")
 
         val pageConfig = PagingConfig(pageSize = AppConstants.DEFAULT_IMAGES_PER_PAGE)
-        val pagingSource = HitsPagingSource(
-            networkDataSource = networkDataSource,
-            cacheDataSource = cacheDataSource,
-            hitsRequestModel = data
-        )
 
-        return Pager(pageConfig) { pagingSource }.flow
+        return Pager(pageConfig) {
+            HitsPagingSource(
+                networkDataSource = networkDataSource,
+                cacheDataSource = cacheDataSource,
+                loadRequestModel = loadRequestModel
+            )
+        }.flow
     }
 }

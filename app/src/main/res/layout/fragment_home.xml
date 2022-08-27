@@ -40,7 +40,7 @@
         <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/primary"
+                android:background="@color/light_gray"
                 app:layout_constraintTop_toBottomOf="@id/tvSearchView"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -51,7 +51,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/default_padding"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tvSearchView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
         />

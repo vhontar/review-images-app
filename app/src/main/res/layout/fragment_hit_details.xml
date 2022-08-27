@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="vm" type="com.vhontar.reviewimagesapp.view.details.HitDetailsViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivHit"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{vm.model.imageURL}"
+                app:circled="@{false}"
+                app:makeResize="@{true}"
+                app:layout_constraintTop_toTopOf="parent"
+        />
+
+        <View
+                android:id="@+id/vBackground"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/background_view"
+                app:layout_constraintBottom_toBottomOf="@id/ivHit"
+        />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="@id/vBackground"
+                app:layout_constraintBottom_toBottomOf="@id/vBackground"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2">
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:text="@{vm.model.user}"
+                    android:textColor="@android:color/white"
+            />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:visibility="@{vm.model.transformTagsToList().empty ? View.GONE : View.VISIBLE}"
+            />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/ivHit">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivLikes"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/heart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+            />
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.model.likes + ``}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintTop_toTopOf="@id/ivLikes"
+                    app:layout_constraintBottom_toBottomOf="@id/ivLikes"
+                    app:layout_constraintStart_toEndOf="@id/ivLikes"
+                    tools:text="100"
+            />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDownloads"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/download"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+            />
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvDownloads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.model.downloads + ``}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    app:layout_constraintTop_toTopOf="@id/ivDownloads"
+                    app:layout_constraintBottom_toBottomOf="@id/ivDownloads"
+                    app:layout_constraintStart_toEndOf="@id/ivDownloads"
+                    tools:text="100"
+            />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivComments"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/chat_bubble"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="@id/tvComments"
+                    app:layout_constraintTop_toTopOf="parent"
+            />
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.model.comments + ``}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    app:layout_constraintTop_toTopOf="@id/ivComments"
+                    app:layout_constraintBottom_toBottomOf="@id/ivComments"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="100"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05"
+        />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

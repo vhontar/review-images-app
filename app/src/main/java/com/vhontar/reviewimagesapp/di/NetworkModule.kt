@@ -1,5 +1,6 @@
 package com.vhontar.reviewimagesapp.di
 
+import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.vhontar.reviewimagesapp.BuildConfig
 import com.vhontar.reviewimagesapp.datasource.network.HitsNetworkService
@@ -56,6 +57,7 @@ object NetworkModule {
                     .url(changedUrl)
                     .build()
 
+                Log.d("OkHttp", changedRequestBuilder.url.toString())
                 chain.proceed(changedRequestBuilder)
             }
             .build()

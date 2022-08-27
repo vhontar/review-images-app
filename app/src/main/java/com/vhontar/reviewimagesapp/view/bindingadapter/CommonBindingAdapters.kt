@@ -9,7 +9,7 @@ fun ImageView.setLayoutHeight(dimen: Float) {
     layoutParams.height = dimen.toInt()
 }
 
-@BindingAdapter(value = ["imageUrl", "circled"], requireAll = true)
-fun ImageView.setImageUrl(url: String, circled: Boolean) {
-    loadUrl(imageUrl = url, isRounded = circled)
+@BindingAdapter(value = ["imageUrl", "circled", "makeResize"], requireAll = true)
+fun ImageView.setImageUrl(url: String, circled: Boolean, makeResize: Boolean = false) {
+    loadUrl(imageUrl = url, isRounded = circled, makeResize = makeResize)
 }

@@ -1,13 +1,12 @@
 package com.vhontar.reviewimagesapp.view.home.adapter.hit
 
+import android.provider.Settings.System.getConfiguration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import com.vhontar.reviewimagesapp.business.domain.models.HitModel
 import com.vhontar.reviewimagesapp.databinding.RecyclerviewHitItemBinding
+import com.vhontar.reviewimagesapp.view.common.MarginItemDecoration
 import com.vhontar.reviewimagesapp.view.home.adapter.tag.TagAdapter
 
 class HitViewHolder private constructor(
@@ -16,17 +15,18 @@ class HitViewHolder private constructor(
 ) : RecyclerView.ViewHolder(binding.root) {
     private var localModel: HitModel? = null
     private val adapter: TagAdapter = TagAdapter()
+    private val decoration = MarginItemDecoration(
+        rightSpace = 20,
+        rightSpaceWithoutLast = true
+    )
 
     init {
-        binding.root.setOnClickListener {
+        binding.clRoot.setOnClickListener {
             localModel?.let { onItemClicked.invoke(it) }
         }
 
-        val layoutManager = FlexboxLayoutManager(binding.root.context)
-        layoutManager.flexDirection = FlexDirection.COLUMN
-        layoutManager.justifyContent = JustifyContent.FLEX_END
-        binding.rvTags.layoutManager = layoutManager
         binding.rvTags.adapter = adapter
+        binding.rvTags.addItemDecoration(decoration)
     }
 
     fun bind(model: HitModel?) {
@@ -34,7 +34,7 @@ class HitViewHolder private constructor(
         binding.model = model
 
         val tags = model?.transformTagsToList()
-        if (tags.isNullOrEmpty()) {
+        if (!tags.isNullOrEmpty()) {
             adapter.submitList(tags)
         }
 

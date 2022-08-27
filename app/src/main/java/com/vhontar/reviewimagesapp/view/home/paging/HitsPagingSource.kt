@@ -11,29 +11,35 @@ import com.vhontar.reviewimagesapp.utils.AppConstants
 class HitsPagingSource(
     private val networkDataSource: HitsNetworkDataSource,
     private val cacheDataSource: HitsCacheDataSource,
-    private val hitsRequestModel: HitsRequestModel
+    private val loadRequestModel: () -> HitsRequestModel
 ) : PagingSource<Int, HitModel>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HitModel> {
         val key = params.key ?: AppConstants.DEFAULT_PAGE_INDEX
         return try {
             val result = networkDataSource.fetchHits(
-                hitsRequestModel = hitsRequestModel,
+                hitsRequestModel = loadRequestModel.invoke(),
                 page = key,
                 perPage = AppConstants.DEFAULT_IMAGES_PER_PAGE
                 // params.loadSize (don't want to load 3 * loadSize = 60 elements at the beginning)
             )
 
             if (result.errorState != null) {
-                LoadResult.Error(result.errorState.exception ?: IllegalArgumentException())
+                val hits = cacheDataSource.fetchAll()
+
+                LoadResult.Page(
+                    data = hits,
+                    nextKey = null,
+                    prevKey = null
+                )
             } else {
                 val hits = result.data ?: listOf()
 
                 // cache only the first page result MAIN thread
-//                if (key == 1 && hits.isNotEmpty()) {
-//                    cacheDataSource.deleteAll()
-//                    cacheDataSource.insertAll(hits)
-//                }
+                if (key == 1 && hits.isNotEmpty()) {
+                    cacheDataSource.deleteAll()
+                    cacheDataSource.insertAll(hits)
+                }
 
                 LoadResult.Page(
                     data = hits,

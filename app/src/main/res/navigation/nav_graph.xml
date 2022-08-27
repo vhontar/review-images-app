@@ -6,5 +6,12 @@
 
     <fragment android:id="@+id/homeFragment"
               android:name="com.vhontar.reviewimagesapp.view.home.HomeFragment"
-              android:label="HomeFragment"/>
+              android:label="HomeFragment">
+        <action android:id="@+id/action_homeFragment_to_hitDetailsFragment" app:destination="@id/hitDetailsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/hitDetailsFragment"
+              android:name="com.vhontar.reviewimagesapp.view.details.HitDetailsFragment"
+              android:label="HitDetailsFragment">
+        <argument android:name="hitId" app:argType="integer"/>
+    </fragment>
 </navigation>

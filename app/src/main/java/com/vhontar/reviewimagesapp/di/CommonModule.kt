@@ -12,7 +12,6 @@ import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoService
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoServiceImpl
 import com.vhontar.reviewimagesapp.datasource.network.HitsNetworkService
 import com.vhontar.reviewimagesapp.datasource.network.HitsNetworkServiceImpl
-import com.vhontar.reviewimagesapp.datasource.network.NetworkService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
