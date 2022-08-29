@@ -9,8 +9,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.vhontar.reviewimagesapp.R
 
-const val OVERRIDE_SIZE_HIGHER_RESOLUTION = 700
-const val OVERRIDE_SIZE_LOWER_RESOLUTION = 500
+const val OVERRIDE_SIZE_HIGHER_RESOLUTION = 1600
+const val OVERRIDE_SIZE_LOWER_RESOLUTION = 800
 
 fun ImageView.loadUrl(
     imageUrl: String,

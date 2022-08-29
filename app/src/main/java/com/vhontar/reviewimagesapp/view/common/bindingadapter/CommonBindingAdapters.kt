@@ -1,4 +1,4 @@
-package com.vhontar.reviewimagesapp.view.bindingadapter
+package com.vhontar.reviewimagesapp.view.common.bindingadapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -10,6 +10,9 @@ fun ImageView.setLayoutHeight(dimen: Float) {
 }
 
 @BindingAdapter(value = ["imageUrl", "circled", "makeResize"], requireAll = true)
-fun ImageView.setImageUrl(url: String, circled: Boolean, makeResize: Boolean = false) {
-    loadUrl(imageUrl = url, isRounded = circled, makeResize = makeResize)
+fun ImageView.setImageUrl(url: String?, circled: Boolean?, makeResize: Boolean?) {
+    if (url == null)
+        return
+
+    loadUrl(imageUrl = url, isRounded = circled ?: false, makeResize = makeResize ?: false)
 }

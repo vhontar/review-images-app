@@ -25,11 +25,8 @@ class LoaderViewHolder(
     }
 
     fun bind(loadState: LoadState) {
-        if (loadState is LoadState.Loading) {
-            binding.mlLoader.transitionToEnd()
-        } else {
-            binding.mlLoader.transitionToStart()
-        }
+        binding.isLoading = loadState is LoadState.Loading
+        binding.isError = loadState is LoadState.Error
     }
 
     companion object {

@@ -39,6 +39,7 @@
                     android:scaleType="centerCrop"
                     app:imageUrl="@{model.previewURL}"
                     app:circled="@{false}"
+                    app:makeResize="@{false}"
                     app:layout_constraintTop_toTopOf="parent"
             />
 

@@ -8,6 +8,8 @@ import com.vhontar.reviewimagesapp.business.usecase.loadhit.LoadHitUseCase
 import com.vhontar.reviewimagesapp.business.usecase.loadhit.LoadHitUseCaseImpl
 import com.vhontar.reviewimagesapp.business.usecase.loadhits.LoadHitsUseCase
 import com.vhontar.reviewimagesapp.business.usecase.loadhits.LoadHitsUseCaseImpl
+import com.vhontar.reviewimagesapp.business.usecase.loadlastquery.LoadLastQueryUseCase
+import com.vhontar.reviewimagesapp.business.usecase.loadlastquery.LoadLastQueryUseCaseImpl
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoService
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoServiceImpl
 import com.vhontar.reviewimagesapp.datasource.network.HitsNetworkService
@@ -31,6 +33,9 @@ abstract class CommonModule {
 
     @Binds
     abstract fun bindLoadHitsUseCase(loadHitsUseCase: LoadHitsUseCaseImpl): LoadHitsUseCase
+
+    @Binds
+    abstract fun bindLoadLastQueryUseCase(loadLastQueryUseCase: LoadLastQueryUseCaseImpl): LoadLastQueryUseCase
 
     @Binds
     abstract fun bindHitDaoService(hiltDaoService: HitsDaoServiceImpl): HitsDaoService

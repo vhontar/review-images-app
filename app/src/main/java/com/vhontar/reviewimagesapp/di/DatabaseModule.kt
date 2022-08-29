@@ -6,7 +6,7 @@ import com.vhontar.reviewimagesapp.datasource.database.AppDatabase
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitDao
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoService
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitsDaoServiceImpl
-import com.vhontar.reviewimagesapp.utils.AppConstants
+import com.vhontar.reviewimagesapp.business.utils.AppConstants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
