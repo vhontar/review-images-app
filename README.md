@@ -17,6 +17,7 @@ AndroidX:
 * Paging 3
 * Navigation
 * Room (simple caching)
+
 Other:
 * <a href= "https://square.github.io/retrofit/">Retrofit</a> for network requests
 * <a href="https://github.com/Kotlin/kotlinx.serialization">kotlinx.serialization</a> for parsing JSON data
