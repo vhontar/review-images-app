@@ -1,13 +1,9 @@
-# ReviewImagesApp sample
+## ReviewImagesApp sample
 ReviewImagesApp is a sample app of reviewing and searching images, built in Kotlin.
 * Clean Architecture
 * MVVM design architecture pattern
 * SOLID, KISS, DRY (design architecture principles)
 * Entity and Model layers to safely parse data from API
-
-## Screenshots
-
-<img src="screenshots/app_screen_1.png" alt="Screenshot">
 
 ### Features
 * View list of images on the home page
@@ -33,6 +29,10 @@ Other:
 * Redesign of the app
 * Github Actions for CI/CD
 * Splash screen
+
+### Screenshots
+
+<img src="screenshots/app_screen_1.png" alt="Screenshot">
 
 ## License
 
