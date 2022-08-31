@@ -28,6 +28,8 @@ Other:
 ### Todo:
 * Jetpack Compose UI
 * Redesign of the app
+* Github Actions for CI/CD
+* Splash screen
 
 ## License
 
