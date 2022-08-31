@@ -16,7 +16,7 @@ class LoadHitUseCaseImpl @Inject constructor(
         if (data == null)
             throw IllegalArgumentException("Hit request model is null.")
 
-        val cachedHitModel = cacheDataSource.fetch(data.id)
+        val cachedHitModel = cacheDataSource.fetchHit(data.id)
         return if (cachedHitModel != null) {
             DataState.data(data = cachedHitModel)
         } else {

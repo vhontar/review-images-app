@@ -19,7 +19,8 @@ data class HitModel(
     val previewWidth: Int,
     val previewHeight: Int
 ) {
-    private var tagsAsList = arrayListOf<String>()
+    var tagsAsList = arrayListOf<String>()
+        private set
 
     fun transformTagsToList(): List<String> {
         if (tagsAsList.isEmpty() && tags.isNotEmpty()) {

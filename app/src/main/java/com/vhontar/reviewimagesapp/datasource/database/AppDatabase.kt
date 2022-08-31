@@ -3,19 +3,19 @@ package com.vhontar.reviewimagesapp.datasource.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitDao
-import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitRemoteKeyDao
+import com.vhontar.reviewimagesapp.datasource.database.dao.hits.HitLastQueryDao
 import com.vhontar.reviewimagesapp.datasource.database.entities.HitDatabaseEntity
-import com.vhontar.reviewimagesapp.datasource.database.entities.HitRemoteKeyDatabaseEntity
+import com.vhontar.reviewimagesapp.datasource.database.entities.HitLastQueryDatabaseEntity
 
 @Database(
     entities = [
         HitDatabaseEntity::class,
-        HitRemoteKeyDatabaseEntity::class
+        HitLastQueryDatabaseEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun hitDao(): HitDao
-    abstract fun hitRemoteKeyDao(): HitRemoteKeyDao
+    abstract fun hitLastQueryDao(): HitLastQueryDao
 }

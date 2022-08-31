@@ -8,6 +8,6 @@ class LoadLastQueryUseCaseImpl @Inject constructor(
     private val cacheDataSource: HitsCacheDataSource
 ): LoadLastQueryUseCase {
     override suspend fun invoke(data: Unit?): String {
-        return cacheDataSource.fetchLastRemoteKey()?.query ?: AppConstants.DEFAULT_REQUEST
+        return cacheDataSource.fetchLastQuery()?.query ?: AppConstants.DEFAULT_REQUEST
     }
 }

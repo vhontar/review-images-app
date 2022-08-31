@@ -10,6 +10,6 @@ class OpenHitDetailsUseCaseImpl(
         if (data == null)
             return
 
-        cacheDataSource.insert(data)
+        cacheDataSource.insertHit(data)
     }
 }

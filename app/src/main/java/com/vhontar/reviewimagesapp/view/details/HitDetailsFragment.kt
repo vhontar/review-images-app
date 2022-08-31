@@ -50,7 +50,7 @@ class HitDetailsFragment: BaseFragment() {
         _binding = null
     }
 
-    override fun retry() {
+    override fun refresh() {
         viewModel.loadHit()
     }
 }

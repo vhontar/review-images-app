@@ -6,8 +6,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -61,24 +59,18 @@ class ConnectivityMonitor(
     }
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
-//        override fun onCapabilitiesChanged(
-//            network: Network,
-//            networkCapabilities: NetworkCapabilities
-//        ) {
-//            super.onCapabilitiesChanged(network, networkCapabilities)
-//            Log.d(TAG, "onCapabilitiesChanged")
-//            lastInternetConnectionCheck()
-//        }
+        override fun onCapabilitiesChanged(
+            network: Network,
+            networkCapabilities: NetworkCapabilities
+        ) {
+            super.onCapabilitiesChanged(network, networkCapabilities)
+            Log.d(TAG, "onCapabilitiesChanged")
+            lastInternetConnectionCheck(true)
+        }
 
         override fun onUnavailable() {
             super.onUnavailable()
             Log.d(TAG, "OnUnavailable")
-            lastInternetConnectionCheck()
-        }
-
-        override fun onAvailable(network: Network) {
-            super.onAvailable(network)
-            Log.d(TAG, "onAvailable")
             lastInternetConnectionCheck()
         }
 
@@ -88,31 +80,29 @@ class ConnectivityMonitor(
             lastInternetConnectionCheck()
         }
 
-        private fun lastInternetConnectionCheck() {
-            Handler(Looper.getMainLooper()).postDelayed({
-                connectivityManager.allNetworks.forEach { network ->
-                    network?.let {
-                        connectivityManager.getNetworkCapabilities(it)?.let { networkCapabilities ->
-                            val netInternet =
-                                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                            val netValidated =
-                                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        // onCapabilitiesChanged sometimes runs too many times, and we want to check only positive results
+        // onUnavailable, onLost -> will cover cases of losing network
+        private fun lastInternetConnectionCheck(onlyOnline: Boolean = false) {
+            connectivityManager.allNetworks.forEach { network ->
+                network?.let {
+                    connectivityManager.getNetworkCapabilities(it)?.let { networkCapabilities ->
+                        val netInternet =
+                            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                        val netValidated =
+                            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
 
-                            val isConnected = netInternet && netValidated
+                        val isConnected = netInternet && netValidated
 
-                            Log.d(
-                                TAG,
-                                "Connections State $isConnected netInternet: $netInternet"
-                            )
-                            toggleConnectionState(isConnected)
-                        }
+                        if (!isConnected && onlyOnline)
+                            return
+
+                        toggleConnectionState(isConnected)
                     }
                 }
+            }
 
-                if (connectivityManager.allNetworks.isEmpty()) {
-                    toggleConnectionState(false)
-                }
-            }, 500)
+            if (connectivityManager.allNetworks.isEmpty() && !onlyOnline)
+                toggleConnectionState(false)
         }
     }
 

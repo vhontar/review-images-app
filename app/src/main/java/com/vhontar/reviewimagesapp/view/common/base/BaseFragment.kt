@@ -18,13 +18,13 @@ abstract class BaseFragment: Fragment() {
         ConnectivityMonitor(requireContext(), viewLifecycleOwner, ::onInternetChangedStatus)
     }
 
-    abstract fun retry()
+    abstract fun refresh()
 
     private fun onInternetChangedStatus(isConnected: Boolean) {
         if (!isConnected) {
             showNoInternetSnackbar()
         } else {
-            showInternetConnectedSnackbar { retry() }
+            showInternetConnectedSnackbar { refresh() }
         }
     }
 }

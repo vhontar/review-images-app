@@ -25,18 +25,18 @@ class HitViewHolder private constructor(
             localModel?.let { onItemClicked.invoke(it) }
         }
 
-        binding.rvTags.adapter = adapter
-        binding.rvTags.addItemDecoration(decoration)
+//        binding.rvTags.adapter = adapter
+//        binding.rvTags.addItemDecoration(decoration)
     }
 
     fun bind(model: HitModel?) {
         localModel = model
         binding.model = model
 
-        val tags = model?.transformTagsToList()
-        if (!tags.isNullOrEmpty()) {
-            adapter.submitList(tags)
-        }
+        model?.transformTagsToList()
+//        if (!tags.isNullOrEmpty()) {
+//            adapter.submitList(tags)
+//        }
 
         binding.executePendingBindings()
     }

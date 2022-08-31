@@ -2,10 +2,12 @@ package com.vhontar.reviewimagesapp.view.home
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,7 +21,6 @@ import com.vhontar.reviewimagesapp.view.common.base.BaseFragment
 import com.vhontar.reviewimagesapp.view.home.adapter.hit.HitAdapter
 import com.vhontar.reviewimagesapp.view.home.adapter.hit.HitLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class HomeFragment: BaseFragment() {
@@ -44,6 +45,8 @@ class HomeFragment: BaseFragment() {
 
             val loadStateAdapter = HitLoadStateAdapter { adapter?.retry() }
             adapter?.addLoadStateListener {
+                it.source.refresh
+                it.source.append
                 viewModel.setLoading(it.source.refresh is LoadState.Loading)
             }
             rvHits.itemAnimator = null // remove bluming effect / animation
@@ -68,23 +71,24 @@ class HomeFragment: BaseFragment() {
                 rvHits.addItemDecoration(decoration)
             }
 
-            tvSearchView.setOnClickListener { tvSearchView.requestFocus() }
-            tvSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(p0: String?): Boolean {
-                    if (p0.isNullOrEmpty())
+            etSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+                override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        val value = p0?.text
+                        if (value.isNullOrEmpty())
+                            return false
+
+                        binding.rvHits.smoothScrollToPosition(0)
+                        viewModel.generateHitsRequestModel(value.toString())
+                        adapter?.refresh()
                         return true
+                    }
 
-                    binding.rvHits.smoothScrollToPosition(0)
-                    viewModel.generateHitsRequestModel(p0)
-                    adapter?.refresh()
-                    return true
-                }
-
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    return true
+                    return false
                 }
             })
+
+            ivClose.setOnClickListener { viewModel.clear() }
         }
 
         return binding.root
@@ -93,24 +97,15 @@ class HomeFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // unfortunately search view doesn't have `query` as data binding property
-        viewModel.lastQuery.observe(viewLifecycleOwner) {
-            binding.tvSearchView.apply {
-                setQuery(it, false)
-                isIconified = false
-                clearFocus()
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            viewModel.fetchHits().collectLatest {
+        lifecycleScope.launchWhenCreated {
+            viewModel.fetchHits().collect {
                 adapter?.submitData(it)
             }
         }
     }
 
-    override fun retry() {
-        adapter?.retry()
+    override fun refresh() {
+        adapter?.refresh()
     }
 
     override fun onDestroyView() {

@@ -4,6 +4,7 @@
 
     <string name="no_internet_connection">No internet connection…</string>
     <string name="internet_connected">You are online!</string>
-    <string name="retry">Retry</string>
+    <string name="retry">Refresh</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="no_hits">No hits were found. Try again!</string>
 </resources>

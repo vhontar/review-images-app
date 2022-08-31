@@ -1,7 +1,7 @@
 package com.vhontar.reviewimagesapp.datasource.database.entities
 
 import com.vhontar.reviewimagesapp.business.domain.models.HitModel
-import com.vhontar.reviewimagesapp.business.domain.models.HitRemoteKeyModel
+import com.vhontar.reviewimagesapp.business.domain.models.HitLastQueryModel
 
 internal fun HitDatabaseEntity.toDomainModel(): HitModel = HitModel(
     id = id,
@@ -47,13 +47,11 @@ internal fun HitModel.toDatabaseEntity(): HitDatabaseEntity = HitDatabaseEntity(
 
 internal fun List<HitModel>.toDatabaseEntities(): List<HitDatabaseEntity> = map { it.toDatabaseEntity() }
 
-fun HitRemoteKeyDatabaseEntity.toDomainModel() = HitRemoteKeyModel(
-    query = query,
-    nextKey = nextKey
+internal fun HitLastQueryDatabaseEntity.toDomainModel() = HitLastQueryModel(
+    query = query
 )
 
-internal fun HitRemoteKeyModel.toDatabaseEntity() = HitRemoteKeyDatabaseEntity(
-    query = query,
-    nextKey = nextKey
+internal fun HitLastQueryModel.toDatabaseEntity() = HitLastQueryDatabaseEntity(
+    query = query
 )
 

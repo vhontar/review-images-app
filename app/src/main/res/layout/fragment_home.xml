@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
                 name="vm"
                 type="com.vhontar.reviewimagesapp.view.home.HomeViewModel"/>
@@ -27,21 +28,70 @@
                 app:layout_constraintGuide_percent="0.95"
         />
 
-        <androidx.appcompat.widget.SearchView
-                android:id="@+id/tvSearchView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clSearchView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/default_padding"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
-                app:layout_constraintEnd_toEndOf="@id/guideline2"
-        />
+                app:layout_constraintEnd_toEndOf="@id/guideline2">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivLoupe"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/loupe"
+                    app:layout_constraintTop_toTopOf="@id/etSearch"
+                    app:layout_constraintBottom_toBottomOf="@id/etSearch"
+                    app:layout_constraintStart_toStartOf="parent"
+            />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:background="@null"
+                    android:text="@={vm.lastQuery}"
+                    android:hint="@string/placeholder_search"
+                    android:imeOptions="actionSearch"
+                    android:maxLines="1"
+                    android:layout_marginStart="@dimen/small_padding"
+                    android:layout_marginEnd="@dimen/small_padding"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivClose"
+                    app:layout_constraintStart_toEndOf="@id/ivLoupe"
+            />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivClose"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/close"
+                    android:visibility="@{vm.lastQuery.empty ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/etSearch"
+                    app:layout_constraintBottom_toBottomOf="@id/etSearch"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        <androidx.appcompat.widget.SearchView-->
+        <!--                android:id="@+id/tvSearchView"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginTop="@dimen/default_padding"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="@id/guideline1"-->
+        <!--                app:layout_constraintEnd_toEndOf="@id/guideline2"-->
+        <!--        />-->
 
         <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="@color/light_gray"
-                app:layout_constraintTop_toBottomOf="@id/tvSearchView"
+                app:layout_constraintTop_toBottomOf="@id/clSearchView"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
         />
@@ -51,11 +101,23 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/default_padding"
+                android:translationZ="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tvSearchView"
+                app:layout_constraintTop_toBottomOf="@id/clSearchView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
+        />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_hits"
+                android:visibility="@{vm.noItemsFound ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
         />
 
         <include

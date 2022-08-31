@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="android.view.View"/>
@@ -69,16 +70,60 @@
                         android:textColor="@android:color/white"
                 />
 
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvTags"
+                <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginBottom="@dimen/small_padding"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:visibility="@{model.transformTagsToList().empty ? View.GONE : View.VISIBLE}"
-                />
+                        android:layout_marginTop="@dimen/tag_padding">
+                    <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:textSize="13sp"
+                            android:text="@{model.tagsAsList.get(0)}"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/tag_chip"
+                            android:visibility="@{model.tagsAsList.size() > 0 ? View.VISIBLE : View.GONE}"
+                            tools:text="Super long tag name"
+                    />
+
+                    <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:textSize="13sp"
+                            android:text="@{model.tagsAsList.get(1)}"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/tag_chip"
+                            android:layout_marginStart="@dimen/tag_padding"
+                            android:visibility="@{model.tagsAsList.size() > 1 ? View.VISIBLE : View.GONE}"
+                            tools:text="Super long tag name"
+                    />
+
+                    <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:textSize="13sp"
+                            android:text="@{model.tagsAsList.get(2)}"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/tag_chip"
+                            android:layout_marginStart="@dimen/tag_padding"
+                            android:visibility="@{model.tagsAsList.size() > 2 ? View.VISIBLE : View.GONE}"
+                            tools:text="Super long tag name"
+                    />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!--                <androidx.recyclerview.widget.RecyclerView-->
+                <!--                        android:id="@+id/rvTags"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:orientation="horizontal"-->
+                <!--                        android:layout_marginTop="6dp"-->
+                <!--                        android:layout_marginBottom="@dimen/small_padding"-->
+                <!--                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+                <!--                        android:visibility="@{model.transformTagsToList().empty ? View.GONE : View.VISIBLE}"-->
+                <!--                />-->
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
